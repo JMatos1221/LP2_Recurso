@@ -48,6 +48,39 @@ namespace LP2_Recurso
             return (x1, y1, x2, y2);
         }
 
+        public void Swap()
+        {
+            (int x1, int y1, int x2, int y2) = GetPositions();
+
+            Piece pieceOne = pieces[x1, y1];
+            Piece pieceTwo = pieces[x2, y2];
+
+            Piece aux = piece[x1, y1];
+
+            SetPiece(x1, y1, pieceTwo);
+            SetPiece(x2, y2, aux);
+        }
+
+        public void Reproduction()
+        {
+            (int x1, int y1, int x2, int y2) = GetPositions();
+
+            Piece pieceOne = pieces[x1, y1];
+            Piece pieceTwo = pieces[x2, y2];
+
+            if (pieceOne == Piece.None)
+            {
+                if (pieceTwo == Piece.None)
+                    return;
+                else
+                    SetPiece(x1, y1, pieceTwo);
+            }
+            else if (pieceTwo == Piece.None)
+            {
+                SetPiece(x2, y2, pieceOne);
+            }
+        }
+
         private void SetPiece(int x, int y, Piece piece)
         {
             pieces[x, y] = piece;
