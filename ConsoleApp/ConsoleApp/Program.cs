@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace ConsoleApp
+namespace LP2_Recurso
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
         }
     }
 }
