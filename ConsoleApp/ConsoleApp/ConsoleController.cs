@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Collections.Generic;
 
 namespace LP2_Recurso
@@ -23,14 +24,41 @@ namespace LP2_Recurso
             rnd = new Random();
         }
 
-        public void Run()
+        public void Run(ConsoleView view)
         {
             running = true;
+
+            grid.Fill();
+
+            view.Print(grid);
+
+            while (running)
+            {
+                GenerateEvents();
+
+                foreach (string currentEvent in events)
+                    RunEvent(currentEvent);
+
+                view.Update(grid);
+            }
         }
 
         private void RunEvent(string currentEvent)
         {
+            switch (currentEvent)
+            {
+                case "Swap":
+                    grid.Swap();
+                    break;
 
+                case "Reproduction":
+                    grid.Reproduction();
+                    break;
+
+                case "Selection":
+                    grid.Selection();
+                    break;
+            }
         }
 
         private void GenerateEvents()
