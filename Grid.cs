@@ -8,6 +8,9 @@ namespace LP2_Recurso
         int xDim, yDim;
         Random rnd;
 
+        public int XDim=>xDim;
+        public int YDim=>yDim;
+
         public Grid(int x, int y)
         {
             xDim = x;
