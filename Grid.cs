@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace LP2_Recurso
 {
@@ -8,8 +9,9 @@ namespace LP2_Recurso
         int xDim, yDim;
         Random rnd;
 
-        public int XDim=>xDim;
-        public int YDim=>yDim;
+        public int XDim => xDim;
+        public int YDim => yDim;
+        public List<int> PositionsToUpdate { get; set; }
 
         public Grid(int x, int y)
         {
@@ -17,6 +19,7 @@ namespace LP2_Recurso
             yDim = y;
             pieces = new Piece[xDim, yDim];
             rnd = new Random();
+            PositionsToUpdate = new List<int>();
         }
 
         public void Fill()
@@ -62,6 +65,8 @@ namespace LP2_Recurso
 
             SetPiece(x1, y1, pieceTwo);
             SetPiece(x2, y2, aux);
+
+            AddPositionsToUpdate(PositionsToUpdate, x1, y1, x2, y2);
         }
 
         public void Reproduction()
@@ -76,11 +81,15 @@ namespace LP2_Recurso
                 if (pieceTwo == Piece.None)
                     return;
                 else
+                {
                     SetPiece(x1, y1, pieceTwo);
+                    AddPositionsToUpdate(PositionsToUpdate, x1, y1);
+                }
             }
             else if (pieceTwo == Piece.None)
             {
                 SetPiece(x2, y2, pieceOne);
+                AddPositionsToUpdate(PositionsToUpdate, x2, y2);
             }
         }
 
@@ -100,14 +109,29 @@ namespace LP2_Recurso
             (pieceOne == Piece.Scissors && pieceTwo == Piece.Paper))
             {
                 SetPiece(x2, y2, Piece.None);
+                AddPositionsToUpdate(PositionsToUpdate, x2, y2);
             }
             else
+            {
                 SetPiece(x1, y1, Piece.None);
+                AddPositionsToUpdate(PositionsToUpdate, x1, y1);
+            }
         }
 
         private void SetPiece(int x, int y, Piece piece)
         {
             pieces[x, y] = piece;
+        }
+
+        public Piece GetPiece(int x, int y)
+        {
+            return pieces[x, y];
+        }
+
+        private void AddPositionsToUpdate(List<int> list, params int[] toAdd)
+        {
+            foreach (int i in toAdd)
+                list.Add(i);
         }
     }
 }

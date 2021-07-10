@@ -1,6 +1,6 @@
 ﻿namespace LP2_Recurso
 {
-    internal enum Piece
+    public enum Piece
     {
         None,
         Rock,
