@@ -17,7 +17,7 @@ namespace LP2_Recurso
         {
             xDim = x;
             yDim = y;
-            pieces = new Piece[xDim, yDim];
+            pieces = new Piece[yDim, xDim];
             rnd = new Random();
             PositionsToUpdate = new List<int>();
         }
@@ -31,7 +31,7 @@ namespace LP2_Recurso
                 {
                     genPiece = rnd.Next(0, 4);
 
-                    pieces[i, j] = (Piece)genPiece;
+                    pieces[j, i] = (Piece)genPiece;
                 }
         }
 
@@ -42,8 +42,17 @@ namespace LP2_Recurso
             x1 = rnd.Next(0, xDim);
             y1 = rnd.Next(0, yDim);
 
-            x2 = x1 + (rnd.NextDouble() < 0.5 ? -1 : 1);
-            y2 = y1 + (rnd.NextDouble() < 0.5 ? -1 : 1);
+            x2 = x1;
+            y2 = y1;
+
+            if (rnd.NextDouble() < 0.5)
+            {
+                x2 += rnd.NextDouble() < 0.5 ? -1 : 1;
+            }
+            else
+            {
+                y2 += rnd.NextDouble() < 0.5 ? -1 : 1;
+            }
 
             if (x2 < 0) x2 += xDim;
             else if (x2 == xDim) x2 -= xDim;
@@ -58,23 +67,26 @@ namespace LP2_Recurso
         {
             (int x1, int y1, int x2, int y2) = GetPositions();
 
-            Piece pieceOne = pieces[x1, y1];
-            Piece pieceTwo = pieces[x2, y2];
+            Piece pieceOne = pieces[y1, x1];
+            Piece pieceTwo = pieces[y2, x2];
 
-            Piece aux = pieces[x1, y1];
+            if (pieceOne != pieceTwo)
+            {
+                Piece aux = pieces[y1, x1];
 
-            SetPiece(x1, y1, pieceTwo);
-            SetPiece(x2, y2, aux);
+                SetPiece(x1, y1, pieceTwo);
+                SetPiece(x2, y2, aux);
 
-            AddPositionsToUpdate(PositionsToUpdate, x1, y1, x2, y2);
+                AddPositionsToUpdate(PositionsToUpdate, x1, y1, x2, y2);
+            }
         }
 
         public void Reproduction()
         {
             (int x1, int y1, int x2, int y2) = GetPositions();
 
-            Piece pieceOne = pieces[x1, y1];
-            Piece pieceTwo = pieces[x2, y2];
+            Piece pieceOne = pieces[y1, x1];
+            Piece pieceTwo = pieces[y2, x2];
 
             if (pieceOne == Piece.None)
             {
@@ -97,8 +109,8 @@ namespace LP2_Recurso
         {
             (int x1, int y1, int x2, int y2) = GetPositions();
 
-            Piece pieceOne = pieces[x1, y1];
-            Piece pieceTwo = pieces[x2, y2];
+            Piece pieceOne = pieces[y1, x1];
+            Piece pieceTwo = pieces[y2, x2];
 
             if (pieceOne == Piece.None || pieceTwo == Piece.None ||
             pieceOne == pieceTwo)
@@ -120,12 +132,12 @@ namespace LP2_Recurso
 
         private void SetPiece(int x, int y, Piece piece)
         {
-            pieces[x, y] = piece;
+            pieces[y, x] = piece;
         }
 
         public Piece GetPiece(int x, int y)
         {
-            return pieces[x, y];
+            return pieces[y, x];
         }
 
         private void AddPositionsToUpdate(List<int> list, params int[] toAdd)
