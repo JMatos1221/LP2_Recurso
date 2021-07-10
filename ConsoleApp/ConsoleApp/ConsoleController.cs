@@ -38,6 +38,7 @@ namespace LP2_Recurso
 
                 foreach (string currentEvent in events)
                     RunEvent(currentEvent);
+                
 
                 view.Update(grid);
             }

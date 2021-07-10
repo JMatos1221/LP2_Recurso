@@ -13,13 +13,14 @@ namespace LP2_Recurso
 
         public void Print(Grid grid)
         {
-            Console.SetCursorPosition(0, 0);
+            Console.Clear();
+            Console.CursorVisible = false;
 
-            for (int i = 0; i < grid.XDim; i++)
+            for (int i = 0; i < grid.YDim; i++)
             {
-                for (int j = 0; j < grid.YDim; j++)
+                for (int j = 0; j < grid.XDim; j++)
                 {
-                    SelectPieceColor(grid, i, j);
+                    SelectPieceColor(grid, j, i);
 
                     System.Console.Write(" ");
                 }
