@@ -55,7 +55,7 @@ namespace LP2_Recurso
             Piece pieceOne = pieces[x1, y1];
             Piece pieceTwo = pieces[x2, y2];
 
-            Piece aux = piece[x1, y1];
+            Piece aux = pieces[x1, y1];
 
             SetPiece(x1, y1, pieceTwo);
             SetPiece(x2, y2, aux);
@@ -79,6 +79,27 @@ namespace LP2_Recurso
             {
                 SetPiece(x2, y2, pieceOne);
             }
+        }
+
+        public void Selection()
+        {
+            (int x1, int y1, int x2, int y2) = GetPositions();
+
+            Piece pieceOne = pieces[x1, y1];
+            Piece pieceTwo = pieces[x2, y2];
+
+            if (pieceOne == Piece.None || pieceTwo == Piece.None ||
+            pieceOne == pieceTwo)
+                return;
+
+            if ((pieceOne == Piece.Rock && pieceTwo == Piece.Scissors) ||
+            (pieceOne == Piece.Paper && pieceTwo == Piece.Rock) ||
+            (pieceOne == Piece.Scissors && pieceTwo == Piece.Paper))
+            {
+                SetPiece(x2, y2, Piece.None);
+            }
+            else
+                SetPiece(x1, y1, Piece.None);
         }
 
         private void SetPiece(int x, int y, Piece piece)
