@@ -1,14 +1,13 @@
 using System;
-using System.Threading;
 using System.Collections.Generic;
 
 namespace LP2_Recurso
 {
-    public class ConsoleController
+    public class ConsoleController : IController
     {
         Grid grid;
         List<string> events;
-        bool running;
+        bool running, paused;
         float swapRate, reprRate, selRate;
         Poisson poisson;
         Random rnd;
@@ -22,9 +21,10 @@ namespace LP2_Recurso
             events = new List<string>();
             poisson = new Poisson(grid.XDim, grid.YDim);
             rnd = new Random();
+            paused = false;
         }
 
-        public void Run(ConsoleView view)
+        public void Run(IConsoleView view)
         {
             running = true;
 
@@ -34,14 +34,21 @@ namespace LP2_Recurso
 
             while (running)
             {
-                GenerateEvents();
+                if (!paused)
+                {
+                    GenerateEvents();
 
-                foreach (string currentEvent in events)
-                    RunEvent(currentEvent);
-                
+                    foreach (string currentEvent in events)
+                        RunEvent(currentEvent);
 
-                view.Update(grid);
+                    view.Update(grid);
+                }
+                view.GetInput();
             }
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(0, grid.YDim);
+            Console.CursorVisible = true;
         }
 
         private void RunEvent(string currentEvent)
@@ -108,6 +115,16 @@ namespace LP2_Recurso
             }
 
             return eventList;
+        }
+
+        public void TogglePause()
+        {
+            paused = !paused;
+        }
+
+        public void Quit()
+        {
+            running = false;
         }
     }
 }

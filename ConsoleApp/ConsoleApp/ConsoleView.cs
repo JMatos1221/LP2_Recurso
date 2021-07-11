@@ -2,7 +2,7 @@ using System;
 
 namespace LP2_Recurso
 {
-    public class ConsoleView
+    public class ConsoleView : IConsoleView
     {
         ConsoleController controller;
 
@@ -62,6 +62,25 @@ namespace LP2_Recurso
                     Console.BackgroundColor = ConsoleColor.Red;
                     break;
 
+            }
+        }
+
+        public void GetInput()
+        {
+            if (Console.KeyAvailable)
+            {
+                ConsoleKey key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.Spacebar:
+                        controller.TogglePause();
+                        break;
+
+                    case ConsoleKey.Escape:
+                        controller.Quit();
+                        break;
+                }
             }
         }
     }
