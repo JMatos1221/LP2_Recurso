@@ -14,12 +14,12 @@ public class Controller : MonoBehaviour, IController
     private InputField xDimIn, yDimIn, swapRateIn, reprRateIn, selRateIn;
 
     private List<string> events;
+    private bool paused;
     private Poisson poisson;
     private System.Random rnd;
     private float swapRate, reprRate, selRate;
     private View view;
     private int xDim, yDim;
-    private bool paused;
 
     private void Start()
     {
@@ -31,6 +31,7 @@ public class Controller : MonoBehaviour, IController
 
     public void TogglePause()
     {
+        paused = !paused;
     }
 
     public void Quit()
@@ -55,12 +56,12 @@ public class Controller : MonoBehaviour, IController
 
         CultureInfo culture = CultureInfo.InvariantCulture;
 
-        xDim = Convert.ToInt32(xDimIn);
-        yDim = Convert.ToInt32(yDimIn);
+        xDim = Convert.ToInt32(xDimIn.text, culture);
+        yDim = Convert.ToInt32(yDimIn.text, culture);
 
-        swapRate = Convert.ToSingle(swapRateIn, culture);
-        reprRate = Convert.ToSingle(reprRateIn, culture);
-        selRate = Convert.ToSingle(selRateIn, culture);
+        swapRate = Convert.ToSingle(swapRateIn.text, culture);
+        reprRate = Convert.ToSingle(reprRateIn.text, culture);
+        selRate = Convert.ToSingle(selRateIn.text, culture);
 
         StartCoroutine("SimulationCoroutine");
     }
@@ -128,9 +129,11 @@ public class Controller : MonoBehaviour, IController
     private IEnumerator SimulationCoroutine()
     {
         Grid grid = new Grid(xDim, yDim);
+        view.CreateTexture(xDim, yDim);
         poisson = new Poisson(xDim, yDim);
 
         grid.Fill();
+        view.Print(grid);
 
         while (true)
         {
@@ -139,12 +142,12 @@ public class Controller : MonoBehaviour, IController
                 GenerateEvents();
 
                 foreach (string currentEvent in events)
-                {
                     RunEvent(grid, currentEvent);
-                }
+
+                view.UpdateView(grid);
             }
 
-            yield return null;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }
