@@ -5,6 +5,12 @@ using Grid = LP2_Recurso.Grid;
 
 public class View : MonoBehaviour
 {
+    [Header("UI Elements")] [SerializeField]
+    private GameObject startButton;
+
+    [SerializeField] private GameObject pauseButton, stopButton;
+
+    [SerializeField] private GameObject inputParent, pauseText;
     [SerializeField] private RawImage image;
     private Texture2D texture;
 
@@ -23,18 +29,19 @@ public class View : MonoBehaviour
         texture = new Texture2D(x, y);
         texture.filterMode = FilterMode.Point;
 
-        float aux = x / y;
+        float aux = x / (float) y;
 
         if (aux > 1)
         {
             x = 500;
             y = (int) (500 * (1 / aux));
         }
-        else
+        else if (aux < 1)
         {
             y = 500;
-            x = (int) (500 * (1 / aux));
+            x = (int) (500 * aux);
         }
+
 
         image.gameObject.GetComponent<RectTransform>().sizeDelta =
             new Vector2(x, y);
@@ -76,5 +83,30 @@ public class View : MonoBehaviour
 
                 break;
         }
+    }
+
+    public void ShowImage()
+    {
+        image.gameObject.SetActive(true);
+    }
+
+    public void HideImage()
+    {
+        image.gameObject.SetActive(false);
+    }
+
+    public void RunningUI(bool state)
+    {
+        inputParent.SetActive(!state);
+        startButton.SetActive(!state);
+        pauseButton.SetActive(state);
+        stopButton.SetActive(state);
+
+        if (!state) PausedUI(false);
+    }
+
+    public void PausedUI(bool state)
+    {
+        pauseText.SetActive(state);
     }
 }

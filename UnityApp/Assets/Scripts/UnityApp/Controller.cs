@@ -10,8 +10,10 @@ using Grid = LP2_Recurso.Grid;
 
 public class Controller : MonoBehaviour, IController
 {
+    [Header("Input")] [SerializeField] private InputField xDimIn;
+
     [SerializeField]
-    private InputField xDimIn, yDimIn, swapRateIn, reprRateIn, selRateIn;
+    private InputField yDimIn, swapRateIn, reprRateIn, selRateIn;
 
     private List<string> events;
     private bool paused;
@@ -32,6 +34,7 @@ public class Controller : MonoBehaviour, IController
     public void TogglePause()
     {
         paused = !paused;
+        view.PausedUI(paused);
     }
 
     public void Quit()
@@ -128,12 +131,18 @@ public class Controller : MonoBehaviour, IController
 
     private IEnumerator SimulationCoroutine()
     {
+        view.RunningUI(true);
+
+
+        view.ShowImage();
+
         Grid grid = new Grid(xDim, yDim);
         view.CreateTexture(xDim, yDim);
         poisson = new Poisson(xDim, yDim);
 
         grid.Fill();
         view.Print(grid);
+
 
         while (true)
         {
@@ -149,5 +158,16 @@ public class Controller : MonoBehaviour, IController
 
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    public void StopSimulation()
+    {
+        paused = false;
+
+        StopAllCoroutines();
+
+        view.HideImage();
+
+        view.RunningUI(false);
     }
 }
