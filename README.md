@@ -18,7 +18,7 @@ Autoria:
   - Unity Setup;
   - General Bugfixing;
   - Part of Delivery Report;  
-<br>
+  <br>
 - João Matos - 21901219
   - Piece Enum and Grid Class;
   - Poisson Class;
