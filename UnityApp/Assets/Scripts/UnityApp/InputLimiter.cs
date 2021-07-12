@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +29,7 @@ public class InputLimiter : MonoBehaviour
     {
         if (value != string.Empty)
         {
-            float x = Convert.ToSingle(value);
+            float x = Convert.ToSingle(value, CultureInfo.InvariantCulture);
 
             if (x < -1)
                 input.text = "-1";
