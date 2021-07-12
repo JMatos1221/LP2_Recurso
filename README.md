@@ -36,7 +36,7 @@ Autoria:
 Para o [projeto de recurso de Linguagens de Programação II](https://github.com/VideojogosLusofona/lp2_2020_prec) foi proposto realizar uma simulação do jogo `Pedra, Papel, Tesoura` num ecossistema em que competem pelo seu espaço no mundo em Consola e Unity.  
 Este projeto foi realizado com base na máteria de LP2, principalmente nos Design Patterns.  
 
-## Arquitetura da Solucao  
+## Arquitetura da Solução  
 Para a solução do nosso projeto, utilizámos o `Model View Controller` e o `Iterator Pattern`, separando assim os dados do programa da lógica e loop e também da `GUI`.  
 O projeto foi organizado com submódulos, sendo que existe código comum para o projeto em Consola e para o projeto em Unity, onde esse código comum contém o `Model` do Pattern `Model View Controller`, sendo a class `Grid.cs` que faz uso de outras classes como `Piece.cs` que apenas contém uma `enum` para a classificação de cada "casa" na simulação. Temos depois a classe `Poisson.cs` que para cada evento `Swap`, `Reproduction` e `Selection`, vai gerar um número que ccorresponderá à quantidade de vezes que esse evento vai ocorrer na frame atual. Por fim temos a interface `IController` que é implementada no `Controller` em ambos os projetos de Consola e Unity.
 
