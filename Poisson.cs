@@ -6,8 +6,6 @@ namespace LP2_Recurso
     {
         /// Value calculated with grid size
         private double gridValue;
-        /// Lambda value for the Poisson algorithm
-        private double lambda;
         /// Constant value for the Poisson algorithm
         const int STEP = 500;
         /// Random instance
