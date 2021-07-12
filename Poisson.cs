@@ -6,6 +6,7 @@ namespace LP2_Recurso
     {
         private double gridValue;
         private double lambda;
+        const int STEP = 500;
         private Random rnd;
 
         public Poisson(int xDim, int yDim)
@@ -14,22 +15,32 @@ namespace LP2_Recurso
             rnd = new Random();
         }
 
-        public int Next(float rateExp)
+        public int Next(double rateExp)
         {
-            int k = 0;
-            double l = Math.Pow(Math.E, -lambda);
+            double lambdaLeft = gridValue * Math.Pow(10, rateExp);
             double p = 1;
-
-            lambda = gridValue * Math.Pow(10, rateExp);
+            int k = 0;
 
             do
             {
                 k += 1;
+                p *= rnd.NextDouble();
 
-                double u = rnd.NextDouble();
+                while (p < 1 && lambdaLeft > 0)
+                {
+                    if (lambdaLeft > STEP)
+                    {
+                        p *= Math.Pow(Math.E, STEP);
+                        lambdaLeft -= STEP;
+                    }
+                    else
+                    {
+                        p *= Math.Pow(Math.E, lambdaLeft);
+                        lambdaLeft = 0;
+                    }
+                }
 
-                p *= u;
-            } while (p > l);
+            } while (p > 1);
 
             return k - 1;
         }
