@@ -8,7 +8,7 @@ namespace LP2_Recurso
         Grid grid;
         List<string> events;
         bool running, paused;
-        float swapRate, reprRate, selRate;
+        double swapRate, reprRate, selRate;
         Poisson poisson;
         Random rnd;
 

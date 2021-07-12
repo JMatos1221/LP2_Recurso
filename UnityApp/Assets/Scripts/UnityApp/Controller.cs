@@ -19,7 +19,7 @@ public class Controller : MonoBehaviour, IController
     private bool paused;
     private Poisson poisson;
     private System.Random rnd;
-    private float swapRate, reprRate, selRate;
+    private double swapRate, reprRate, selRate;
     private View view;
     private int xDim, yDim;
 
@@ -62,9 +62,9 @@ public class Controller : MonoBehaviour, IController
         xDim = Convert.ToInt32(xDimIn.text, culture);
         yDim = Convert.ToInt32(yDimIn.text, culture);
 
-        swapRate = Convert.ToSingle(swapRateIn.text, culture);
-        reprRate = Convert.ToSingle(reprRateIn.text, culture);
-        selRate = Convert.ToSingle(selRateIn.text, culture);
+        swapRate = Convert.ToDouble(swapRateIn.text, culture);
+        reprRate = Convert.ToDouble(reprRateIn.text, culture);
+        selRate = Convert.ToDouble(selRateIn.text, culture);
 
         StartCoroutine("SimulationCoroutine");
     }

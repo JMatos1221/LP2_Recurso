@@ -36,7 +36,7 @@ public class View : MonoBehaviour
             x = 500;
             y = (int) (500 * (1 / aux));
         }
-        else if (aux < 1)
+        else
         {
             y = 500;
             x = (int) (500 * aux);
